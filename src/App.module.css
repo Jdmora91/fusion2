@@ -1,0 +1,110 @@
+.page {
+  min-height: 100vh;
+}
+
+.preview {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(20rem, 1.1fr);
+  align-items: center;
+  min-height: 100svh;
+ padding:
+  clamp(9rem, 13vw, 11rem)
+  var(--page-padding)
+  var(--page-padding);
+overflow: hidden;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  max-width: 44rem;
+  animation: fade-up 900ms var(--transition-normal) both;
+}
+
+
+
+.title {
+  max-width: 10ch;
+  font-family: var(--font-heading);
+  font-size: var(--text-heading);
+  font-weight: 500;
+  line-height: 0.88;
+  letter-spacing: -0.05em;
+}
+
+.titleAccent {
+  color: var(--color-red);
+}
+
+.description {
+  max-width: 36rem;
+  margin-top: var(--space-md);
+  font-size: var(--text-medium);
+  color: var(--color-muted);
+}
+
+.imageWrapper {
+  position: relative;
+  height: min(76vh, 56rem);
+  overflow: hidden;
+  border-radius: 50% 50% 1rem 1rem;
+  animation: image-reveal 1.2s var(--transition-slow) 200ms both;
+}
+
+.imageWrapper::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  background:
+    linear-gradient(to top, rgb(9 10 9 / 45%), transparent 45%),
+    linear-gradient(to right, rgb(9 10 9 / 20%), transparent 40%);
+  pointer-events: none;
+}
+
+.heroImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.imageWrapper:hover .heroImage {
+  transform: scale(1.035);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: var(--space-md);
+  font-size: var(--text-small);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.status::before {
+  width: 2.5rem;
+  height: 1px;
+  content: '';
+  background: var(--color-green);
+}
+
+@media (max-width: 800px) {
+  .preview {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+    padding-top: 8rem;
+    padding-bottom: 2rem;
+  }
+
+  .content {
+    padding-top: 2rem;
+  }
+
+  .imageWrapper {
+    min-height: 30rem;
+    height: 65svh;
+    border-radius: 14rem 14rem 1rem 1rem;
+  }
+}
