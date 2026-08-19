@@ -1,0 +1,40 @@
+:root {
+  /* Colores principales */
+  --color-background: #090a09;
+  --color-surface: #141513;
+  --color-surface-light: #20211e;
+  --color-cream: #f4efe5;
+  --color-white: #ffffff;
+  --color-muted: #b8b1a7;
+  --color-red: #e5222d;
+  --color-green: #9fbd45;
+  --color-gold: #c8a46a;
+
+  /* Tipografías */
+  --font-heading: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Manrope', Arial, sans-serif;
+
+  /* Tamaños fluidos */
+  --text-small: 0.875rem;
+  --text-body: 1rem;
+  --text-medium: clamp(1.1rem, 2vw, 1.35rem);
+  --text-heading: clamp(2.8rem, 7vw, 7rem);
+  --text-display: clamp(4rem, 11vw, 10rem);
+
+  /* Espaciado */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: clamp(3rem, 8vw, 7rem);
+  --space-xl: clamp(5rem, 12vw, 11rem);
+
+  /* Diseño */
+  --container-width: 1280px;
+  --page-padding: clamp(1.25rem, 4vw, 4rem);
+  --border-color: rgb(255 255 255 / 15%);
+
+  /* Animaciones */
+  --transition-fast: 200ms ease;
+  --transition-normal: 450ms cubic-bezier(0.22, 1, 0.36, 1);
+  --transition-slow: 800ms cubic-bezier(0.22, 1, 0.36, 1);
+}
