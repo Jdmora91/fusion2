@@ -1,0 +1,211 @@
+.map-embed-fallback {
+  display: none;
+}
+
+[class*='_map_'] {
+  display: block !important;
+  height: 260px !important;
+  overflow: hidden;
+  background: #171716;
+}
+
+[class*='_map_'] iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: grayscale(1) contrast(1.08) brightness(.78);
+  transition: filter .4s ease;
+}
+
+[class*='_map_']:hover iframe {
+  filter: grayscale(.15) contrast(1.02) brightness(.95);
+}
+
+[class*='_map_'] > span {
+  top: auto !important;
+  bottom: 1rem;
+  padding: .45rem .65rem;
+  color: #ddd !important;
+  background: rgb(9 9 8 / 85%);
+  letter-spacing: .1em;
+  pointer-events: none;
+}
+
+/* Scroll choreography */
+.scroll-reveal,
+[class*='_sushiRail_'] figure[data-r] {
+  opacity: 0;
+  transform: translateY(55px) scale(.97);
+  transition: opacity .8s ease, transform 1s cubic-bezier(.2,.7,.2,1);
+}
+
+.scroll-reveal[class*='_visible_'],
+[class*='_sushiRail_'] figure[data-r][class*='_visible_'] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+[data-parallax] {
+  --parallax: 0px;
+}
+
+[class*='_heroMedia_'][data-parallax] {
+  transform: translateY(calc(var(--parallax) * .28)) scale(1.025);
+}
+
+[class*='_foodGrid_'] img[data-parallax],
+[class*='_sushiRail_'] img[data-parallax] {
+  height: 112% !important;
+  transform: translateY(var(--parallax)) scale(1.06);
+  will-change: transform;
+}
+
+/* More compact Japanese sushi chapter */
+.sushi-japan {
+  isolation: isolate;
+  background:
+    linear-gradient(90deg, transparent 49.8%, rgb(255 255 255 / 4%) 50%, transparent 50.2%),
+    radial-gradient(circle at 86% 12%, rgb(201 29 37 / 28%) 0 17%, transparent 17.2%),
+    #100f0d !important;
+}
+
+.sushi-japan::before,
+.sushi-japan::after {
+  position: absolute;
+  z-index: 0;
+  width: 22rem;
+  height: 22rem;
+  content: '';
+  border: 1px solid rgb(232 223 204 / 12%);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2.8rem rgb(255 255 255 / 2%), 0 0 0 5.6rem rgb(255 255 255 / 2%);
+}
+
+.sushi-japan::before { top: 8%; left: -10rem; }
+.sushi-japan::after { right: -9rem; bottom: 6%; }
+
+.kanji {
+  position: absolute;
+  z-index: 1;
+  color: transparent;
+  font: 500 clamp(7rem, 17vw, 18rem)/1 'Noto Serif JP', serif;
+  -webkit-text-stroke: 1px rgb(235 225 205 / 11%);
+  writing-mode: vertical-rl;
+  pointer-events: none;
+}
+
+.kanji-left { left: 1%; top: 16%; }
+.kanji-right { right: 1%; bottom: 12%; }
+
+[class*='_sushiRail_'] {
+  gap: 1rem !important;
+  margin-top: 4.5rem !important;
+}
+
+[class*='_sushiRail_'] figure {
+  width: clamp(220px, 23vw, 340px) !important;
+  height: clamp(300px, 33vw, 480px) !important;
+  border: 1px solid rgb(240 228 205 / 16%);
+}
+
+[class*='_sushiRail_'] figure:nth-child(even) { margin-top: 2.5rem !important; }
+
+[class*='_sushiRail_'] figcaption {
+  padding-top: 4rem;
+  background: linear-gradient(transparent, rgb(0 0 0 / 75%));
+}
+
+/* Curated gallery and full-screen viewer */
+.gallery-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: .8s ease;
+}
+
+.gallery-more[class*='_visible_'] { opacity: 1; transform: none; }
+
+.gallery-more button { cursor: pointer; }
+.gallery-more button span { margin-left: .8rem; transition: transform .3s; }
+.gallery-more button:hover span { transform: rotate(45deg); }
+
+.gallery-modal {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  overflow-y: auto;
+  padding: clamp(1.25rem, 4vw, 4rem);
+  color: #f6f0e6;
+  background: #0b0b0a;
+  animation: gallery-in .55s cubic-bezier(.2,.7,.2,1) both;
+}
+
+@keyframes gallery-in { from { opacity: 0; transform: translateY(24px); } }
+
+.gallery-modal > header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgb(255 255 255 / 14%);
+}
+
+.gallery-modal small { color: #b5d452; letter-spacing: .22em; }
+.gallery-modal h2 { margin-top: .4rem; font: 500 clamp(3rem, 7vw, 7rem)/.9 'Cormorant Garamond'; }
+.gallery-modal header button { display: grid; justify-items: center; border: 0; color: white; background: none; font-size: 3rem; cursor: pointer; }
+.gallery-modal header button span { font: .5rem Manrope; letter-spacing: .15em; text-transform: uppercase; }
+.gallery-modal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.gallery-modal-grid figure { position: relative; min-height: 28rem; overflow: hidden; }
+.gallery-modal-grid figure:nth-child(4n+1) { grid-column: span 2; }
+.gallery-modal-grid img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s; }
+.gallery-modal-grid figure:hover img { transform: scale(1.04); }
+.gallery-modal-grid figcaption { position: absolute; inset: auto 1rem 1rem; display: flex; justify-content: space-between; font-size: .6rem; letter-spacing: .15em; }
+
+/* Premium footer */
+.premium-footer.premium-footer {
+  display: grid !important;
+  grid-template-columns: 1.3fr .65fr 1fr !important;
+  align-items: start !important;
+  gap: clamp(2.5rem, 7vw, 8rem) !important;
+  padding-top: 6rem !important;
+  padding-bottom: 2rem !important;
+  background: radial-gradient(circle at 0 0, rgb(181 212 82 / 8%), transparent 25rem), #070707;
+}
+
+.footer-brand { display: flex; align-items: center; gap: 1.5rem; }
+.premium-footer .footer-brand img { width: 110px; margin: 0; }
+.footer-brand strong { font: 500 clamp(1.8rem, 3vw, 3rem) 'Cormorant Garamond'; letter-spacing: .04em; }
+.footer-nav,.footer-visit { display: flex; flex-direction: column; align-items: flex-start; gap: .75rem; }
+.premium-footer small { margin-bottom: .5rem; color: #b5d452; font-size: .55rem; letter-spacing: .22em; }
+.footer-nav a,.footer-visit a { font-size: .72rem; letter-spacing: .08em; }
+.footer-visit p { color: #aaa !important; }
+.footer-visit a { padding-bottom: .3rem; border-bottom: 1px solid #e3242b; }
+.footer-bottom { grid-column: 1 / -1; display: flex; justify-content: space-between; padding-top: 2rem; border-top: 1px solid rgb(255 255 255 / 12%); }
+.footer-bottom a { color: #b5d452; }
+
+@media (max-width: 800px) {
+  .gallery-modal-grid { grid-template-columns: 1fr 1fr; }
+  .gallery-modal-grid figure:nth-child(4n+1) { grid-column: auto; }
+  .premium-footer.premium-footer { grid-template-columns: 1fr 1fr !important; }
+  .footer-brand,.footer-bottom { grid-column: 1 / -1; }
+}
+
+@media (max-width: 560px) {
+  [class*='_sushiRail_'] figure { width: 68vw !important; height: 92vw !important; }
+  .kanji { font-size: 7rem; }
+  .gallery-modal-grid { grid-template-columns: 1fr; }
+  .gallery-modal-grid figure { min-height: 78vw; }
+  .gallery-modal > header { align-items: start; }
+  .premium-footer.premium-footer { grid-template-columns: 1fr !important; }
+  .footer-brand,.footer-bottom { grid-column: auto; }
+  .footer-bottom { flex-direction: column; gap: .5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal,[class*='_sushiRail_'] figure[data-r],.gallery-more { opacity: 1; transform: none; }
+  [data-parallax] { transform: none !important; }
+}
