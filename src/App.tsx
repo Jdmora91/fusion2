@@ -1,39 +1,23 @@
-import Header from './components/Header/Header'
-import heroImage from './assets/images/salmon-rolls.jpeg'
+import { useEffect, useState } from 'react'
 import styles from './App.module.css'
-
-function App() {
-  return (
-    <main className={styles.page}>
-      <Header />
-
-      <section id="inicio" className={styles.preview}>
-        <div className={styles.content}>
-          <p className="eyebrow">Cocina creativa</p>
-
-          <h1 className={styles.title}>
-            Sabores sin
-            <span className={styles.titleAccent}> fronteras.</span>
-          </h1>
-
-          <p className={styles.description}>
-            Una experiencia donde la creatividad, la técnica y diferentes
-            culturas se encuentran en cada plato.
-          </p>
-
-          <p className={styles.status}>Propuesta visual en desarrollo</p>
-        </div>
-
-        <figure className={styles.imageWrapper}>
-          <img
-            className={styles.heroImage}
-            src={heroImage}
-            alt="Rolls de salmón de Fusión Restaurante"
-          />
-        </figure>
-      </section>
-    </main>
-  )
-}
-
+type Lang='en'|'es'|'fr'
+const C={
+en:{nav:['Story','Menu','We ♥ Sushi','Gallery','Visit'],find:'Find us',k:'Creative cuisine · Costa Rica',h:'Where the world meets',ha:'the fire.',lead:'A borderless dining experience by Chef Steven Varela Jiménez—bold sushi, tropical ingredients and plates made with soul.',explore:'Explore the menu',story:'Our story',tick:['International cuisine','We love sushi','Special events','Catering service','Craft beer'],ak:'The chef behind the vision',ah:'Technique, instinct, and a world of flavor.',ap:'Chef Steven Varela Jiménez transforms Costa Rica’s abundance into expressive cuisine. His kitchen moves freely between Japanese precision, Latin warmth and international technique—always guided by fresh ingredients and generous hospitality.',quote:'Every plate should feel familiar for one second—and completely new the next.',mk:'Eight pages of possibilities',mh:'A menu without borders.',mp:'Sushi, seafood, premium cuts, vibrant salads and comforting classics—created for every kind of craving.',open:'Open full menu',down:'Download PDF',sk:'鮨 · Japanese craft, tropical soul',sh1:'We ',sh2:' Sushi',sp:'Hand-rolled. Fearlessly creative. Made to order with selected seafood, balanced rice and unexpected Costa Rican character.',gk:'From our kitchen',gh:'Food worth gathering around.',gp:'A visual taste of the dishes, colors and details that define Fusión.',vk:'Come as you are',vh:'Your table is waiting.',vp:'Share the exact Google Maps link, phone number and opening hours with us and this panel is ready to go live.',maps:'Open Google Maps',contact:'Contact restaurant',foot:'Creative cuisine · Sushi · Good times',by:'Website created by',full:'Full Menu',back:'Back to restaurant',mi:'Browse every page or download the complete menu for offline access.'},
+es:{nav:['Historia','Menú','Amamos el sushi','Galería','Visítanos'],find:'Cómo llegar',k:'Cocina creativa · Costa Rica',h:'Donde el mundo se encuentra con',ha:'el fuego.',lead:'Una experiencia sin fronteras del chef Steven Varela Jiménez: sushi audaz, ingredientes tropicales y platos hechos con alma.',explore:'Explorar el menú',story:'Nuestra historia',tick:['Comida internacional','Amamos el sushi','Eventos especiales','Servicio de catering','Cerveza artesanal'],ak:'El chef detrás de la visión',ah:'Técnica, instinto y un mundo de sabor.',ap:'El chef Steven Varela Jiménez transforma la abundancia de Costa Rica en una cocina expresiva. Su propuesta une precisión japonesa, calidez latina y técnica internacional, siempre con ingredientes frescos y hospitalidad genuina.',quote:'Cada plato debe sentirse familiar por un segundo y completamente nuevo al siguiente.',mk:'Ocho páginas de posibilidades',mh:'Un menú sin fronteras.',mp:'Sushi, mariscos, cortes premium, ensaladas vibrantes y clásicos reconfortantes para todos los gustos.',open:'Abrir menú completo',down:'Descargar PDF',sk:'鮨 · Arte japonés, alma tropical',sh1:'Amamos el ',sh2:' Sushi',sp:'Enrollado a mano, creativo y preparado al momento con mariscos seleccionados, arroz equilibrado y carácter costarricense.',gk:'Desde nuestra cocina',gh:'Comida para compartir.',gp:'Una mirada a los platos, colores y detalles que definen a Fusión.',vk:'Ven como eres',vh:'Tu mesa te espera.',vp:'Compártenos el enlace exacto de Google Maps, teléfono y horario para dejar este panel listo para publicar.',maps:'Abrir Google Maps',contact:'Contactar restaurante',foot:'Cocina creativa · Sushi · Buenos momentos',by:'Página creada por',full:'Menú completo',back:'Volver al restaurante',mi:'Explora cada página o descarga el menú completo.'},
+fr:{nav:['Histoire','Menu','Nous ♥ Sushi','Galerie','Visite'],find:'Nous trouver',k:'Cuisine créative · Costa Rica',h:'Là où le monde rencontre',ha:'le feu.',lead:'Une expérience sans frontières du chef Steven Varela Jiménez : sushi audacieux, ingrédients tropicaux et assiettes pleines d’âme.',explore:'Explorer le menu',story:'Notre histoire',tick:['Cuisine internationale','Nous aimons le sushi','Événements spéciaux','Service traiteur','Bière artisanale'],ak:'Le chef derrière la vision',ah:'Technique, instinct et un monde de saveurs.',ap:'Le chef Steven Varela Jiménez transforme l’abondance du Costa Rica en cuisine expressive, entre précision japonaise, chaleur latine et technique internationale.',quote:'Chaque assiette doit sembler familière une seconde, puis entièrement nouvelle.',mk:'Huit pages de possibilités',mh:'Un menu sans frontières.',mp:'Sushi, fruits de mer, viandes premium, salades vibrantes et grands classiques.',open:'Ouvrir le menu',down:'Télécharger le PDF',sk:'鮨 · Art japonais, âme tropicale',sh1:'Nous ',sh2:' Sushi',sp:'Roulé à la main, créatif et préparé sur commande avec des produits sélectionnés et un caractère costaricien.',gk:'Depuis notre cuisine',gh:'Une cuisine à partager.',gp:'Les plats, couleurs et détails qui définissent Fusión.',vk:'Venez comme vous êtes',vh:'Votre table vous attend.',vp:'Partagez le lien Google Maps exact, le téléphone et les horaires pour finaliser ce panneau.',maps:'Ouvrir Google Maps',contact:'Contacter le restaurant',foot:'Cuisine créative · Sushi · Bons moments',by:'Site créé par',full:'Menu complet',back:'Retour au restaurant',mi:'Parcourez chaque page ou téléchargez le menu complet.'}}
+const sushi=[1,2,3,4,5,6,7,8,9,10].map(n=>`/media/sushi/sushi${String(n).padStart(2,'0')}.jpg`)
+const food=[1,8,11,3,13,9,7,10,6,4,5].map(n=>`/media/food/comida${n}.jpg`)
+const menus=[1,2,3,4,5,6,7,8].map(n=>`/media/menu/menu${n}.jpg`)
+function Language({lang,set}:{lang:Lang,set:(v:Lang)=>void}){return <div className={styles.lang}>{(['en','es','fr'] as Lang[]).map(x=><button className={lang===x?styles.active:''} onClick={()=>set(x)} key={x}>{x.toUpperCase()}</button>)}</div>}
+function MenuPage({lang,set}:{lang:Lang,set:(v:Lang)=>void}){const t=C[lang];return <main className={styles.menuPage}><header className={styles.menuTop}><a href="/">← {t.back}</a><Language lang={lang} set={set}/></header><section className={styles.menuIntro}><span>FUSIÓN · SUSHI</span><h1>{t.full}</h1><p>{t.mi}</p><a className={styles.primary} href="/downloads/fusion-sushi-menu.pdf" download>{t.down} ↓</a></section><div className={styles.menuPages}>{menus.map((src,i)=><figure key={src}><span>{i+1} / 08</span><img src={src} alt={`Menu page ${i+1}`}/></figure>)}</div></main>}
+function App(){const[lang,setLang]=useState<Lang>('en'),[open,setOpen]=useState(false),[hero,setHero]=useState(0);const t=C[lang];const vids=['/media/video/cocinallama.mp4','/media/video/sushi1.mp4','/media/video/sushi2.mp4'];useEffect(()=>{const o=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add(styles.visible)),{threshold:.12});document.querySelectorAll('[data-r]').forEach(e=>o.observe(e));return()=>o.disconnect()},[]);if(location.pathname.replace(/\/$/,'')==='/menu')return <MenuPage lang={lang} set={setLang}/>;return <main className={styles.page}>
+<header className={styles.header}><a className={styles.brand} href="#home"><img src="/media/brand/logo.jpg"/><span>FUSIÓN<small>RESTAURANTE & BAR</small></span></a><button className={styles.menuButton} onClick={()=>setOpen(!open)}><i/><i/></button><nav className={open?styles.navOpen:''}>{t.nav.map((x,i)=><a key={x} onClick={()=>setOpen(false)} href={['#about','#menu','#sushi','#gallery','#visit'][i]}>{x}</a>)}<a className={styles.reserve} href="#visit">{t.find}</a></nav><Language lang={lang} set={setLang}/></header>
+<section className={styles.hero} id="home"><div className={styles.heroMedia}>{vids.map((v,i)=><video key={v} className={hero===i?styles.videoActive:''} src={v} muted autoPlay playsInline loop/>)}<i/></div><div className={styles.heroContent}><p className={styles.eye}>{t.k}</p><h1>{t.h}<br/><em>{t.ha}</em></h1><p>{t.lead}</p><div><a className={styles.primary} href="/menu">{t.explore} ↗</a><a className={styles.textLink} href="#about">{t.story} ↓</a></div></div><div className={styles.videoNav}>{vids.map((_,i)=><button className={hero===i?styles.active:''} onClick={()=>setHero(i)} key={i}>0{i+1}</button>)}</div></section>
+<div className={styles.ticker}><div>{[...t.tick,...t.tick].map((x,i)=><span key={i}>{x} <b>✦</b></span>)}</div></div>
+<section className={styles.about} id="about"><div className={styles.copy} data-r><p className={styles.eye}>{t.ak}</p><h2>{t.ah}</h2><p>{t.ap}</p><blockquote>“{t.quote}”<small>Steven Varela Jiménez · Executive Chef</small></blockquote></div><div className={styles.chef} data-r><img src="/media/chef/chef2.jpg"/><img src="/media/chef/chef6.jpg"/><span>CHEF<br/>STEVEN</span></div></section>
+<section className={styles.menuSection} id="menu"><div className={styles.menuVisual} data-r><img src="/media/menu/menu3.jpg"/><img src="/media/menu/menu6.jpg"/><span>08<small>PAGES</small></span></div><div className={styles.copy} data-r><p className={styles.eye}>{t.mk}</p><h2>{t.mh}</h2><p>{t.mp}</p><div className={styles.actions}><a className={styles.primary} href="/menu">{t.open} ↗</a><a className={styles.secondary} href="/downloads/fusion-sushi-menu.pdf" download>{t.down} ↓</a></div></div></section>
+<section className={styles.sushi} id="sushi"><i className={styles.sun}/><div className={styles.sushiHead} data-r><p>{t.sk}</p><h2>{t.sh1}<b>♥</b>{t.sh2}</h2><p>{t.sp}</p></div><div className={styles.sushiRail}>{sushi.map((src,i)=><figure key={src}><img src={src}/><figcaption><span>鮨</span>0{i+1}</figcaption></figure>)}</div></section>
+<section className={styles.gallery} id="gallery"><header data-r><div><p className={styles.eye}>{t.gk}</p><h2>{t.gh}</h2></div><p>{t.gp}</p></header><div className={styles.foodGrid}>{food.map((src,i)=><figure className={i%5===0?styles.wide:''} data-r key={src}><img src={src}/><span>0{i+1}</span></figure>)}</div></section>
+<section className={styles.visit} id="visit"><div className={styles.visitImages}><img src="/media/restaurant/fusion01.jpg"/><img src="/media/restaurant/fusion02.jpg"/></div><div className={styles.visitCard} data-r><p className={styles.eye}>{t.vk}</p><h2>{t.vh}</h2><p>{t.vp}</p><div className={styles.map}><span>9.7489° N · 83.7534° W</span><b>FUSIÓN<br/>SUSHI</b><i>⌖</i></div><a className={styles.primary} target="_blank" href="https://maps.google.com/?q=Fusion+Sushi+Costa+Rica">{t.maps} ↗</a><a className={styles.secondary} href="mailto:info@fusion-sushi.com">{t.contact}</a></div></section>
+<footer className={styles.footer}><div><img src="/media/brand/logo.jpg"/><p>{t.foot}</p></div><div><a href="#">Instagram</a><a href="#">Facebook</a><a href="/menu">Menu</a></div><p>© {new Date().getFullYear()} Fusión Sushi<br/>{t.by} <a target="_blank" href="https://puravidawebs.com">puravidawebs.com ↗</a></p></footer></main>}
 export default App
